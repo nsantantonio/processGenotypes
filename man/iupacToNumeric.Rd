@@ -8,26 +8,26 @@ iupacToNumeric(X, NAsymbol = "N", snpMargin = 2, checkX = TRUE,
   returnMAF = FALSE, includePM = TRUE)
 }
 \arguments{
-\item{X}{[value]}
+\item{X}{data.frame or matrix of IUPAC genotype calls}
 
-\item{NAsymbol}{[value]. Default is "N"}
+\item{NAsymbol}{character for missing call symbol. Default is "N"}
 
-\item{snpMargin}{[value]. Default is 2}
+\item{snpMargin}{integer. margin for snps. the other margin should be for individuals. 1 for rows, 2 for columns. Default is 2}
 
-\item{checkX}{[value]. Default is TRUE}
+\item{checkX}{logical. Should X be checked for > 2 alleles per site? Default is TRUE}
 
-\item{returnMAF}{[value]. Default is FALSE}
+\item{returnMAF}{logical. Should tables of allele and genotype frequencies be returned? Default is FALSE}
 
-\item{includePM}{[value]. Default is TRUE}
+\item{includePM}{logical. Should '+' and '-' symbols be processed? Default is TRUE.}
 }
 \value{
-[value]
+data.frame or matrix (depending on input) of genotype scores as numeric values.
 }
 \description{
 function to (do something)
 }
 \details{
-[fill in details here]
+This funciton expects single character IUPAC scores for each genotype call. FOr example, an 'AA' call would be 'A', and an 'AT' call would be 'W'
 }
 \examples{
 none

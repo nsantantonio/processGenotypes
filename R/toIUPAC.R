@@ -33,11 +33,11 @@ toIUPAC <- function(X, NAsymbol = "---", checkX = TRUE, includePM = TRUE){
 	}
 
 	if(checkX){
-		X[X == NAsymbol] <- NA
+		X[X %in% NAsymbol] <- NA
 		Xcalls <- apply(X, 2, nchar)
-		isTwo <- Xcalls != 2
-		isTwo[is.na(isTwo)] <- FALSE
-		if(any(isTwo)) stop("I cant deal with more than two alleles per individual, please fix me!")
+		isNotTwo <- Xcalls != 2
+		isNotTwo[is.na(isNotTwo)] <- FALSE
+		if(any(isNotTwo)) stop("I cant deal with more than two alleles per individual, please fix me!")
 	}
 	
 	for(i in names(iupac)){
@@ -46,6 +46,6 @@ toIUPAC <- function(X, NAsymbol = "---", checkX = TRUE, includePM = TRUE){
 		X[isi] <- iupac[i]	
 	}
 	
-	if(returnDf) X <- data.frame(X)
+	if(returnDf) X <- as.data.frame(X)
 	X
 }

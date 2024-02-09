@@ -2,14 +2,14 @@
 #'
 #' function to (do something)
 #'
-#' @param X [value]
-#' @param NAsymbol [value]. Default is "N"
-#' @param snpMargin [value]. Default is 2
-#' @param checkX [value]. Default is TRUE
-#' @param returnMAF [value]. Default is FALSE
-#' @param includePM [value]. Default is TRUE
-#' @return [value]
-#' @details [fill in details here]
+#' @param X data.frame or matrix of IUPAC genotype calls 
+#' @param NAsymbol character for missing call symbol. Default is "N"
+#' @param snpMargin integer. margin for snps. the other margin should be for individuals. 1 for rows, 2 for columns. Default is 2
+#' @param checkX logical. Should X be checked for > 2 alleles per site? Default is TRUE
+#' @param returnMAF logical. Should tables of allele and genotype frequencies be returned? Default is FALSE
+#' @param includePM logical. Should '+' and '-' symbols be processed? Default is TRUE. 
+#' @return data.frame or matrix (depending on input) of genotype scores as numeric values.
+#' @details This funciton expects single character IUPAC scores for each genotype call. FOr example, an 'AA' call would be 'A', and an 'AT' call would be 'W'
 #' @examples none
 #' @export
 iupacToNumeric <- function(X, NAsymbol = "N", snpMargin = 2, checkX = TRUE, returnMAF = FALSE, includePM = TRUE){
@@ -53,6 +53,6 @@ iupacToNumeric <- function(X, NAsymbol = "N", snpMargin = 2, checkX = TRUE, retu
 	}
 
 	class(M) <- "numeric"
-	if(returnDf) M <- data.frame(M) 
+	if(returnDf) M <- as.data.frame(M) 
 	if(returnMAF) return(list(X = M, alleleFreq = alleleFreq, genoTable = genoTable)) else return(M)
 }

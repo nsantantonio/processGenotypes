@@ -22,12 +22,12 @@ PCplot <- function(X, PC = NULL, xflip = FALSE, yflip = FALSE, pdfFileName = NUL
     if(yflip) udv$u[, PC[2]] <- udv$u[, PC[2]] * -1
 
     if(widthRatio) width <- round(udv$d[PC[1]] / udv$d[PC[2]] * height,2)
-	r <- cor(udv$u[, PC[1]] * udv$d[PC[1]], udv$u[, PC[2]] * udv$d[PC[2]])
-	print(r)
+	# r <- cor(udv$u[, PC[1]] * udv$d[PC[1]], udv$u[, PC[2]] * udv$d[PC[2]])
+	# print(r)
 	txtplot(udv$u[, PC[1]] * udv$d[PC[1]], udv$u[, PC[2]] * udv$d[PC[2]])
 	plot(udv$u[, PC[1]] * udv$d[PC[1]], udv$u[, PC[2]] * udv$d[PC[2]], 
-    	    xlab = paste0("PC", PC[1], " ", round(udv$d[1] / sum(udv$d) * 100, 2), "%"), 
-        	ylab = paste0("PC", PC[2], " ",  round(udv$d[2] / sum(udv$d) * 100, 2), "%"),
+    	    xlab = paste0("PC", PC[1], " ", round({udv$d^2}[1] / sum(udv$d^2) * 100, 2), "%"), 
+        	ylab = paste0("PC", PC[2], " ",  round({udv$d^2}[2] / sum(udv$d^2) * 100, 2), "%"),
         	main = paste0("", title), ...)
     	# legend("topleft", legend = paste0("r = ", round(r, 2)))
 }

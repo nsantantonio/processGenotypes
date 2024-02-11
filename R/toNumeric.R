@@ -11,10 +11,14 @@
 #' @details [fill in details here]
 #' @examples none
 #' @export
-toNumeric <- function(x, check = FALSE, hetAltAlleleToHomoMinor = TRUE, returnAf = TRUE, includePM = TRUE){
+toNumeric <- function(x, check = FALSE, hetAltAlleleToHomoMinor = TRUE, returnAf = TRUE, includePM = TRUE, inclHasHet = TRUE){
 	iupac <- c(AA = "A", CC = "C", GG = "G", TT = "T", AC = "M", AG = "R", AT = "W", CG = "S", CT = "Y", GT = "K") 
 	homo <- c("A", "C", "G", "T")
 	hetero <- c("K", "Y", "W", "S", "R", "M")
+	if(inclHasHet) {
+		hetero <- c("H", hetero)
+		iupac <- c(iupac, H = "H")
+	}
 	if(includePM) {
 		mpHet <- c(apply(expand.grid(c("+", "-"), c("A", "C", "G", "T")), 1, paste, collapse = ""), "+-")
 		pm <- mpHet
@@ -43,7 +47,6 @@ toNumeric <- function(x, check = FALSE, hetAltAlleleToHomoMinor = TRUE, returnAf
 		# cat("More than two alleles! Setting third (smallest) allele to minor...\n ")
 		altAlleles <- sort(names(xhomo)[names(xhomo) != major])
 		if (hetAltAlleleToHomoMinor) x[x %in% iupac[paste(altAlleles, collapse = "")]] <- minor #set heterozygous non-major to homozygous minor
-		# if (hetAltAlleleToHomoMinor) x[x == iupac[paste(altAlleles, collapse = "")]] <- minor #set heterozygous non-major to homozygous minor
 		x[x %in% altAlleles] <- minor # set homozygous alternate to minor	
 	}
 	x[x == major] <- -1

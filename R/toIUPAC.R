@@ -13,10 +13,11 @@
 toIUPAC <- function(X, NAsymbol = "---", checkX = TRUE, includePM = TRUE){
 	sortNucleo <- function(x) sapply(strsplit(x, ""), function(xx) paste0(sort(xx), collapse = ""))
 
-	if(class(X) == "data.frame") {
+	if("data.frame" %in% class(X)) {
 		returnDf <- TRUE
 		X <- as.matrix(X)
 	} else {
+		if(!"matrix" %in% class(X)) stop(paste0("expecting a data.frame or matrix of snp scores. Got class ", class(X)[[1]]))
 		returnDf <- FALSE
 	}
 

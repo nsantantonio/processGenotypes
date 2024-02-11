@@ -12,19 +12,23 @@
 #' @details This funciton expects single character IUPAC scores for each genotype call. FOr example, an 'AA' call would be 'A', and an 'AT' call would be 'W'
 #' @examples none
 #' @export
-iupacToNumeric <- function(X, NAsymbol = "N", snpMargin = 2, checkX = TRUE, returnMAF = FALSE, includePM = TRUE){
+iupacToNumeric <- function(X, NAsymbol = "N", snpMargin = 2, checkX = TRUE, returnMAF = FALSE, includePM = TRUE, inclHasHet = TRUE){
 	homo <- c("A", "C", "G", "T")
 	hetero <- c("K", "Y", "W", "S", "R", "M")
+	if(inclHasHet) {
+		hetero <- c("H", hetero)
+	}
 	if(includePM) {
 		mpHet <- c(apply(expand.grid(c("+", "-"), c("A", "C", "G", "T")), 1, paste, collapse = ""), "+-")
 		homo <- c(homo, "+", "-")
 		hetero <- c(hetero, mpHet)
 	}
 
-	if (class(X) == "data.frame") {
+	if ("data.frame" %in% class(X)) {
 		returnDf <- TRUE
 		X <- as.matrix(X)
 	} else {
+		if(!"matrix" %in% class(X)) stop(paste0("expecting a data.frame or matrix of snp scores. Got class ", class(X)[[1]]))
 		returnDf <- FALSE
 	}
 
